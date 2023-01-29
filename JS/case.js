@@ -1,30 +1,43 @@
-
-
-document.getElementById('case-plus').addEventListener('click', function () {
+function caseNumberPlusMinus(sign) {
     const priviousCaseNumberString = document.getElementById('case-number');
     const priviousCaseNumber = priviousCaseNumberString.value;
-    const curentCaseNumber = parseInt(priviousCaseNumber) + 1;
+    let curentCaseNumber;
+
+    if (sign === true) {
+        curentCaseNumber = parseInt(priviousCaseNumber) + 1;
+    }
+    else {
+        curentCaseNumber = parseInt(priviousCaseNumber) - 1;
+    }
+
     priviousCaseNumberString.value = curentCaseNumber;
+    return curentCaseNumber;
+}
 
-    // total case price
-
+function casePriceUpdate(sign, caseNumber) {
     const priviousCasePriceString = document.getElementById('case-price');
     const priviousCasePrice = parseFloat(priviousCasePriceString.innerText);
 
-    const newCasePrice = priviousCasePrice + 59;
+    const newCasePrice = caseNumber * 59;
+
     priviousCasePriceString.innerText = newCasePrice;
+}
+
+document.getElementById('case-plus').addEventListener('click', function () {
+    const caseNumber = caseNumberPlusMinus(true);
+
+    // total case price
+
+    casePriceUpdate(true, caseNumber);
+    totalPrice()
 
 })
 
 document.getElementById('case-minus').addEventListener('click', function () {
-    const priviousCaseNumberString = document.getElementById('case-number');
-    const priviousCaseNumber = priviousCaseNumberString.value;
-    const curentCaseNumber = parseInt(priviousCaseNumber) - 1;
-    priviousCaseNumberString.value = curentCaseNumber;
+    const caseNumber = caseNumberPlusMinus(false);
 
     // total case price minus
-    const priviousCasePriceString = document.getElementById('case-price');
-    const priviousCasePrice = parseFloat(priviousCasePriceString.innerText);
-    const newCasePrice = priviousCasePrice - 59;
-    priviousCasePriceString.innerText = newCasePrice;
+
+    casePriceUpdate(false, caseNumber);
+    totalPrice()
 })
